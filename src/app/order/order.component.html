@@ -1,0 +1,35 @@
+<div class="order-container">
+    <h2>New Order</h2>
+    <form #orderForm="ngForm" (ngSubmit)="addOrder()" novalidate>
+        <label>
+            Order:
+            <input type="text" name="name" [(ngModel)]="order.name" placeholder="Product Name" translate="no" required>
+            <small class="error">Product name is required.</small>
+        </label>
+
+        <label>
+            Price:
+            <input type="number" name="price" [(ngModel)]="order.price" placeholder="Price" required min="1" />
+        </label>
+
+        <label>
+            Quantity:
+            <input type="number" name="quantity" [(ngModel)]="order.quantity" placeholder="Quantity" required min="1" />
+        </label>
+
+        <button type="submit" [disabled]="!orderForm.valid">Add Order</button>
+    </form>
+
+    <h3>Order List</h3>
+    <ul>
+        <li *ngFor="let order of orders; let i = index">
+            <strong>{{ order.name }}</strong><br>
+            Price: ${{ order.price }}<br>
+            Quantity: {{ order.quantity }}<br>
+            Subtotal: ${{ order.price * order.quantity }}
+            <br>
+            <button (click)="removeOrder(i)">Remove</button>
+        </li>
+        <p class="total"><strong>Total: $</strong> {{ getTotal() }}</p>
+    </ul>
+</div>
